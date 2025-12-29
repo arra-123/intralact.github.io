@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Experience - eSpiCe25</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="experiences.html">Experiences</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="bookingform.html">Booking Form</a></li>
+        <li><a href="mybookings.html">My Bookings</a></li>
+      </ul>
+    </nav>
+    <div class="booking-form-page">
+      <div class="booking-form-container">
+        <div class="form-header">
+          <h1>Complete Your Reservation</h1>
+          <p>Secure your spot in paradise.</p>
+        </div>
+
+        <form id="bookingForm" class="booking-form">
+          <div class="booking-form-grid">
+            <div class="form-group">
+              <label for="checkin">Check In</label>
+              <input
+                type="date"
+                id="checkin"
+                placeholder="Pick a date"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="checkout">Check Out</label>
+              <input
+                type="date"
+                id="checkout"
+                placeholder="Pick a date"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="adults">Adults</label>
+              <select id="adults" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="children">Children</label>
+              <select id="children" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="rooms">Rooms</label>
+              <select id="rooms" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="roomtype">Room Type</label>
+              <select id="roomtype" required>
+                <option value="0">Economy:3 included experiences</option>
+                <option value="1">Deluxe: 5 included experiences</option>
+                <option value="2">Suite: 7 included experiences</option>
+                <option value="3">
+                  Premium Suite: 10 included experiences
+                </option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="guestName">Full Name</label>
+              <input
+                type="text"
+                id="guestName"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="guestnumber">Phone Number</label>
+              <input
+                type="number"
+                id="guestnumber"
+                placeholder="Enter your phone number with country code"
+                required
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="guestemail">Email Address</label>
+              <input
+                type="email"
+                id="guestemail"
+                placeholder="Enter your email address"
+                required
+              />
+            </div>
+          </div>
+          <p
+            id="totalPrice"
+            style="font-weight: bold; font-size: 18px; margin-top: 15px"
+          >
+            totalPrice
+          </p>
+          <script>
+            // 1. Get the form elements from the page
+            const checkin = document.getElementById("checkin");
+            const checkout = document.getElementById("checkout");
+            const roomtype = document.getElementById("roomtype");
+            const totalPriceEl = document.getElementById("totalPrice");
+
+            // 2. Define room prices for each room type
+            // These match the order of your <option> values
+            const roomPrices = {
+              0: 1999, // Economy
+              1: 3499, // Deluxe
+              2: 5499, // Suite
+              3: 7999, // Premium Suite
+            };
+
+            // 3. Function to calculate nights and total price
+            function calculateTotal() {
+              // Convert form dates into JavaScript Date objects
+              const checkinDate = new Date(checkin.value);
+              const checkoutDate = new Date(checkout.value);
+
+              // Get selected room type (0, 1, 2, 3)
+              const type = roomtype.value;
+
+              // ------------- Calculate Nights -------------
+              let nights = 0;
+
+              // Only calculate if both dates exist and checkout is later
+              if (
+                checkin.value &&
+                checkout.value &&
+                checkoutDate > checkinDate
+              ) {
+                const differenceInMs = checkoutDate - checkinDate;
+
+                // Convert milliseconds → days (nights)
+                nights = differenceInMs / (1000 * 60 * 60 * 24);
+              }
+
+              // ------------- Calculate Total Price -------------
+              const roomRate = roomPrices[type]; // Fetch price for selected room type
+              const total = nights * roomRate; // Multiply nights × rate
+
+              // ------------- Display Total Price -------------
+              totalPriceEl.textContent = `Total Price: ₹${total.toLocaleString()} (${nights} night${
+                nights !== 1 ? "s" : ""
+              })`;
+            }
+
+            // 4. Make price update automatically when the user changes anything
+            checkin.addEventListener("change", calculateTotal);
+            checkout.addEventListener("change", calculateTotal);
+            roomtype.addEventListener("change", calculateTotal);
+
+            // 5. Run the function once when the page loads
+            calculateTotal();
+          </script>
+          <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+            import {
+              getFirestore,
+              collection,
+              addDoc,
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+            const firebaseConfig = {
+              apiKey: "AIzaSyCNB8Nt-VffUHORrPi3gkDYJS147ZaTcF0",
+              authDomain: "hackathonintrallect.firebaseapp.com",
+              projectId: "hackathonintrallect",
+              storageBucket: "hackathonintrallect.firebasestorage.app",
+              messagingSenderId: "1025939436428",
+              appId: "1:1025939436428:web:24720c18f503368b3adca9",
+              measurementId: "G-VRS1Z8PQG4",
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            const form = document.getElementById("bookingForm");
+
+            form.addEventListener("submit", async (e) => {
+              e.preventDefault();
+
+              const bookingData = {
+                checkin: checkin.value,
+                checkout: checkout.value,
+                adults: adults.value,
+                children: children.value,
+                rooms: rooms.value,
+                roomtype: roomtype.value,
+                guestName: guestName.value,
+                guestPhone: guestnumber.value,
+                guestEmail: guestemail.value,
+                createdAt: new Date(),
+              };
+
+              try {
+                await addDoc(collection(db, "bookings"), bookingData);
+                alert("Booking saved successfully!");
+                form.reset();
+              } catch (error) {
+                console.error("Error saving booking:", error);
+                alert("Error saving booking.");
+              }
+            });
+          </script>
+
+          <button type="submit" class="btn-book">Book Now</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

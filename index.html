@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eSpiCe25</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- ================= AUTH DRAWER ================= -->
+    <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+    <aside id="authPanel" class="auth-panel login">
+      <div class="auth-inner">
+        <h2 id="authTitle">Sign in</h2>
+
+        <!-- SIGN UP ONLY -->
+        <input
+          id="signupName"
+          class="signup-only"
+          type="text"
+          placeholder="Full name"
+        />
+
+        <!-- SHARED -->
+        <input id="loginEmail" type="email" placeholder="Email" />
+        <input id="loginPassword" type="password" placeholder="Password" />
+
+        <button id="loginBtn" class="button-85">Log In</button>
+        <button id="signupBtn" class="button-85 signup-only">Join Now</button>
+
+        <p id="loginMsg"></p>
+
+        <p class="auth-toggle">
+          <span id="toggleText">New here?</span>
+          <a href="#" id="toggleAuth">Create an account</a>
+        </p>
+      </div>
+    </aside>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="experiences.html">Experiences</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="bookingform.html">Booking Form</a></li>
+          <li><a href="mybookings.html">My Bookings</a></li>
+          <li><a href="#" id="signInBtn">Sign In</a></li>
+        </ul>
+      </nav>
+
+      <div class="content">
+        <div class="logo"><br /><br /><br />eSpiCe25</div>
+        <a href="experiences.html">
+          <h1 class="tagline">RETHINK REALITY</h1>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= BOOKING WIDGET ================= -->
+    <section class="booking-widget-section">
+      <div class="booking-widget">
+        <form class="booking-form">
+          <div class="booking-form-row">
+            <div class="form-group">
+              <label>Check In</label>
+              <input type="date" />
+            </div>
+            <div class="form-group">
+              <label>Check Out</label>
+              <input type="date" />
+            </div>
+            <div class="form-group">
+              <label>Adults</label>
+              <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Children</label>
+              <select>
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Rooms</label>
+              <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="booking-form-button">
+            <a href="experiences.html" class="btn-book">BOOK NOW</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= FEATURED EXPERIENCES ================= -->
+    <section class="featured-section">
+      <h2 class="section-title">Featured Experiences</h2>
+      <div class="experiences-grid">
+        <div class="experience-card">
+          <a href="chillexperiences.html" class="card-overlay"></a>
+          <div class="card-image">🌊</div>
+          <span class="chill-category-badge">Chill</span>
+          <div class="card-content">
+            <h3>Serenity Pools</h3>
+            <p>
+              Relax in our bio-engineered thermal pools with views of eSpiCe25's
+              twin moons. The perfect way to unwind after your long journey.
+            </p>
+            <a href="bookingform.html" class="btn-secondary">Book Experience</a>
+          </div>
+        </div>
+
+        <div class="experience-card">
+          <a href="chillexperiences.html" class="card-overlay"></a>
+          <div class="card-image">🏔️</div>
+          <span class="advent-category-badge">Adventure</span>
+          <div class="card-content">
+            <h3>Canyon Expedition</h3>
+            <p>
+              Explore the breathtaking crystalline canyons formed by ancient  
+              geological forces. An adventure unlike anything on poor old Earth.
+            </p>
+            <a href="bookingform.html" class="btn-secondary">Book Experience</a>
+          </div>
+        </div>
+
+        <div class="experience-card">
+          <a href="chillexperiences.html" class="card-overlay"></a>
+          <div class="card-image">🌺</div>
+          <span class="family-category-badge">Family</span>
+          <div class="card-content">
+            <h3>Discovery Gardens</h3>
+            <p>
+              Bring the whole family to explore our curated gardens featuring
+              flora from both Earth and eSpiCe25's unique ecosystem.
+            </p>
+            <a href="bookingform.html" class="btn-secondary">Book Experience</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <p>Contact us at: eSpiCe25@email.com</p>
+      <p>Follow us on social media: Instagram: shades.exe010</p>
+    </footer>
+    <!-- ================= FIREBASE + JS ================= -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCNB8Nt-VffUHORrPi3gkDYJS147ZaTcF0",
+        authDomain: "hackathonintrallect.firebaseapp.com",
+        projectId: "hackathonintrallect",
+        appId: "1:1025939436428:web:24720c18f503368b3adca9",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // ---------- ELEMENTS ----------
+      const panel = document.getElementById("authPanel");
+      const backdrop = document.getElementById("drawerBackdrop");
+      const signInBtn = document.getElementById("signInBtn");
+
+      const loginBtn = document.getElementById("loginBtn");
+      const signupBtn = document.getElementById("signupBtn");
+      const email = document.getElementById("loginEmail");
+      const password = document.getElementById("loginPassword");
+      const msg = document.getElementById("loginMsg");
+
+      const toggle = document.getElementById("toggleAuth");
+      const title = document.getElementById("authTitle");
+      const toggleText = document.getElementById("toggleText");
+
+      // ---------- DRAWER ----------
+      function openDrawer() {
+        panel.classList.add("open");
+        backdrop.classList.add("active");
+      }
+
+      function closeDrawer() {
+        panel.classList.remove("open");
+        backdrop.classList.remove("active");
+        msg.textContent = "";
+      }
+
+      signInBtn.onclick = (e) => {
+        e.preventDefault();
+        openDrawer();
+      };
+
+      backdrop.onclick = closeDrawer;
+
+      // ---------- LOGIN ----------
+      loginBtn.onclick = async () => {
+        try {
+          await signInWithEmailAndPassword(auth, email.value, password.value);
+          msg.textContent = "Logged in";
+          setTimeout(closeDrawer, 800);
+        } catch (err) {
+          msg.textContent = err.message;
+        }
+      };
+
+      // ---------- SIGNUP ----------
+      signupBtn.onclick = async () => {
+        try {
+          await createUserWithEmailAndPassword(
+            auth,
+            email.value,
+            password.value
+          );
+          msg.textContent = "Account created";
+          setTimeout(closeDrawer, 800);
+        } catch (err) {
+          msg.textContent = err.message;
+        }
+      };
+
+      // ---------- TOGGLE ----------
+      toggle.onclick = (e) => {
+        e.preventDefault();
+        panel.classList.toggle("signup");
+        panel.classList.toggle("login");
+
+        if (panel.classList.contains("signup")) {
+          title.textContent = "Create account";
+          toggleText.textContent = "Already have an account?";
+          toggle.textContent = "Sign in";
+          loginBtn.style.display = "none";
+          signupBtn.style.display = "block";
+        } else {
+          title.textContent = "Sign in";
+          toggleText.textContent = "New here?";
+          toggle.textContent = "Create an account";
+          loginBtn.style.display = "block";
+          signupBtn.style.display = "none";
+        }
+      };
+
+      // ---------- AUTH STATE ----------
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          signInBtn.textContent = user.email;
+        } else {
+          signInBtn.textContent = "Sign In";
+        }
+      });
+    </script>
+  </body>
+</html>

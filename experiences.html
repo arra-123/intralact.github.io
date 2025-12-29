@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experiences - eSpiCe25</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- filter btn -->
+    <button class="filter-btn" onclick="togglePopup()">Filters</button>
+
+    <!-- filtr popup-->
+    <div class="filter-popup-overlay" id="filterPopup">
+      <div class="filter-popup">
+        <button class="close-popup" onclick="togglePopup()">×</button>
+        <div class="filter-options">
+          <a href="chillexperiences.html" onclick="filterCategory('chill')"
+            >Chill</a
+          >
+          <a
+            href="adventurousexperiences.html"
+            onclick="filterCategory('adventurous')"
+            >Adventurous</a
+          >
+          <a href="familyexperiences.html" onclick="filterCategory('family')"
+            >Family</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="experiences.html">Experiences</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="bookingform.html">Booking Form</a></li>
+        <li><a href="mybookings.html">My Bookings</a></li>
+      </ul>
+    </nav>
+
+    <div class="experiences-page">
+      <div class="page-header">
+        <h1>All Experiences</h1>
+        <p>Explore everything we have to offer.</p>
+      </div>
+
+      <div class="experiences-grid">
+        <!-- Chill Experiences -->
+
+        <div class="experience-card chill">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Chill</span>
+          </div>
+          <div class="card-content">
+            <h3>Serenity Pools</h3>
+            <p>Relax with a full body massage using zero-gravity techniques.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card chill">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Chill</span>
+          </div>
+          <div class="card-content">
+            <h3>Meditation Domes</h3>
+            <p>Guided meditation under the moons of eSpiCe25.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card chill">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Chill</span>
+          </div>
+          <div class="card-content">
+            <h3>Spa Sanctuary</h3>
+            <p>Soak in naturally glowing mineral waters.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card chill">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Chill</span>
+          </div>
+          <div class="card-content">
+            <h3>Sunset Observatory</h3>
+            <p>Therapy using alien crystals.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card chill">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Chill</span>
+          </div>
+          <div class="card-content">
+            <h3>Zen Gardens</h3>
+            <p>Premium lounge access with panoramic views.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <!-- Adventurous Experiences -->
+        <div class="experience-card adventurous">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Adventurous</span>
+          </div>
+          <div class="card-content">
+            <h3>Canyon Expedition</h3>
+            <p>High-speed chase through the Crimson Canyons.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card adventurous">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Adventurous</span>
+          </div>
+          <div class="card-content">
+            <h3>Zero-G Sports Arena</h3>
+            <p>Scale the floating islands of Sector 7.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card adventurous">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Adventurous</span>
+          </div>
+          <div class="card-content">
+            <h3>Atmospheric Diving</h3>
+            <p>Jump from the orbital station back to the surface.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card adventurous">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Adventurous</span>
+          </div>
+          <div class="card-content">
+            <h3>Volcanic Ridge Climb</h3>
+            <p>Track dangerous predators in the wild jungle.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card adventurous">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Adventurous</span>
+          </div>
+          <div class="card-content">
+            <h3>Cavern Tour</h3>
+            <p>Submersible tour into an active alien volcano.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <!-- Family Experiences -->
+        <div class="experience-card family">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Family</span>
+          </div>
+          <div class="card-content">
+            <h3>Discovery Gardens</h3>
+            <p>A gentle stroll through the singing flora gardens.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card family">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Family</span>
+          </div>
+          <div class="card-content">
+            <h3>Alien Wildlife Safari</h3>
+            <p>Fun space training activities for kids.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card family">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Family</span>
+          </div>
+          <div class="card-content">
+            <h3>Raft n Row</h3>
+            <p>Navigate tranquil alien rivers in eco-friendly rafts.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card family">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Family</span>
+          </div>
+          <div class="card-content">
+            <h3>Beach Day Paradise</h3>
+            <p>Purple sand beaches with bioluminescent waves.</p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+
+        <div class="experience-card family">
+          <a href="bookingform.html" class="card-overlay"></a>
+          <div class="card-header">
+            <span class="category-badge">Family</span>
+          </div>
+          <div class="card-content">
+            <h3>Holographic Theater</h3>
+            <p>
+              Watch the century's biggest hits enjoying the nature of eSpiCe25.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="bookingform.html" class="btn-book">Book This</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function togglePopup() {
+        document.getElementById("filterPopup").classList.toggle("active");
+      }
+
+      function filterCategory(category) {
+        const cards = document.querySelectorAll(".experience-card");
+        cards.forEach((card) => {
+          if (card.dataset.category === category) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+        togglePopup();
+      }
+    </script>
+  </body>
+</html>

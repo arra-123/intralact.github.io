@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Bookings – eSpiCe25</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="experiences.html">Experiences</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="bookingform.html">Booking Form</a></li>
+        <li><a href="mybookings.html">My Bookings</a></li>
+      </ul>
+    </nav>
+
+    <main class="my-bookings-page">
+      <h1>My Bookings</h1>
+
+      <!-- shown if NOT logged in -->
+      <p id="loginNotice" style="display: none">
+        Please sign in to view your bookings.
+      </p>
+
+      <!-- bookings will be inserted here -->
+      <div id="bookingsContainer"></div>
+    </main>
+
+    <script type="module">
+      // ---------- FIREBASE IMPORTS ----------
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+      import {
+        getFirestore,
+        collection,
+        query,
+        where,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+      // ---------- FIREBASE CONFIG ----------
+      const firebaseConfig = {
+        apiKey: "AIzaSyCNB8Nt-VffUHORrPi3gkDYJS147ZaTcF0",
+        authDomain: "hackathonintrallect.firebaseapp.com",
+        projectId: "hackathonintrallect",
+        storageBucket: "hackathonintrallect.firebasestorage.app",
+        messagingSenderId: "1025939436428",
+        appId: "1:1025939436428:web:24720c18f503368b3adca9",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // ---------- ELEMENTS ----------
+      const bookingsContainer = document.getElementById("bookingsContainer");
+      const loginNotice = document.getElementById("loginNotice");
+
+      // ---------- AUTH CHECK ----------
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          loginNotice.style.display = "block";
+          bookingsContainer.innerHTML = "";
+          return;
+        }
+
+        // user is logged in
+        loginNotice.style.display = "none";
+        loadUserBookings(user.uid);
+      });
+
+      // ---------- LOAD BOOKINGS ----------
+      async function loadUserBookings(userId) {
+        bookingsContainer.innerHTML = "";
+
+        try {
+          const q = query(
+            collection(db, "bookings"),
+            where("userId", "==", userId)
+          );
+
+          const snapshot = await getDocs(q);
+
+          if (snapshot.empty) {
+            bookingsContainer.innerHTML = "<p>You have no bookings yet.</p>";
+            return;
+          }
+
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+
+            const bookingEl = document.createElement("div");
+            bookingEl.className = "booking-card";
+
+            bookingEl.innerHTML = `
+              <h3>${data.roomtype}</h3>
+              <p><strong>Check-in:</strong> ${data.checkin}</p>
+              <p><strong>Check-out:</strong> ${data.checkout}</p>
+              <p><strong>Guests:</strong> ${data.adults} adults, ${
+              data.children
+            } children</p>
+              <p><strong>Total:</strong> ₹${data.totalPrice || "—"}</p>
+            `;
+
+            bookingsContainer.appendChild(bookingEl);
+          });
+        } catch (error) {
+          console.error("Error loading bookings:", error);
+          bookingsContainer.innerHTML = "<p>Error loading bookings.</p>";
+        }
+      }
+    </script>
+  </body>
+</html>
