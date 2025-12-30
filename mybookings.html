@@ -3,17 +3,132 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Bookings – eSpiCe25</title>
+    <title>My Bookings | eSpiCe25</title>
     <link href="style.css" rel="stylesheet" />
+    <style>
+      .my-bookings-page {
+        min-height: 100vh;
+        padding: 8rem 5% 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .my-bookings-page h1 {
+        font-size: 3rem;
+        color: #ffffff;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      #loginNotice {
+        text-align: center;
+        font-size: 1.2rem;
+        color: var(--text);
+        margin: 3rem 0;
+      }
+
+      #loginNotice button {
+        margin-top: 1rem;
+        padding: 1rem 2rem;
+        background: var(--highlight);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      #loginNotice button:hover {
+        background: var(--light);
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      #bookingsContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .booking-card {
+        background: var(--secondary);
+        border: 1px solid rgba(187, 225, 250, 0.1);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: all 0.3s;
+      }
+
+      .booking-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(50, 130, 184, 0.3);
+      }
+
+      .booking-card h3 {
+        color: var(--light);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 0.5rem;
+      }
+
+      .booking-card p {
+        color: var(--text);
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+      }
+
+      .booking-card strong {
+        color: var(--light);
+      }
+
+      .no-bookings {
+        text-align: center;
+        font-size: 1.1rem;
+        color: var(--text);
+        margin: 3rem 0;
+      }
+    </style>
   </head>
   <body>
+    <!-- ================= AUTH DRAWER ================= -->
+    <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+    <aside id="authPanel" class="auth-panel login">
+      <div class="auth-inner">
+        <h2 id="authTitle">Sign in</h2>
+
+        <input
+          id="signupName"
+          class="signup-only"
+          type="text"
+          placeholder="Full name"
+        />
+
+        <input id="loginEmail" type="email" placeholder="Email" />
+        <input id="loginPassword" type="password" placeholder="Password" />
+
+        <button id="loginBtn" class="button-85">Log In</button>
+        <button id="signupBtn" class="button-85 signup-only">Join Now</button>
+
+        <p id="loginMsg"></p>
+
+        <p class="auth-toggle">
+          <span id="toggleText">New here?</span>
+          <a href="#" id="toggleAuth">Create an account</a>
+        </p>
+      </div>
+    </aside>
+
     <nav class="navbar">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="experiences.html">Experiences</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
         <li><a href="bookingform.html">Booking Form</a></li>
         <li><a href="mybookings.html">My Bookings</a></li>
+        <li><a href="#" id="signInBtn">Sign In</a></li>
       </ul>
     </nav>
 
@@ -21,19 +136,21 @@
       <h1>My Bookings</h1>
 
       <!-- shown if NOT logged in -->
-      <p id="loginNotice" style="display: none">
-        Please sign in to view your bookings.
-      </p>
+      <div id="loginNotice" style="display: none">
+        <p>Please sign in to view your bookings.</p>
+        <button id="openAuthBtn">Sign In / Sign Up</button>
+      </div>
 
       <!-- bookings will be inserted here -->
       <div id="bookingsContainer"></div>
     </main>
 
     <script type="module">
-      // ---------- FIREBASE IMPORTS ----------
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
       import {
         getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         onAuthStateChanged,
       } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
       import {
@@ -44,7 +161,6 @@
         getDocs,
       } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-      // ---------- FIREBASE CONFIG ----------
       const firebaseConfig = {
         apiKey: "AIzaSyCNB8Nt-VffUHORrPi3gkDYJS147ZaTcF0",
         authDomain: "hackathonintrallect.firebaseapp.com",
@@ -61,23 +177,111 @@
       // ---------- ELEMENTS ----------
       const bookingsContainer = document.getElementById("bookingsContainer");
       const loginNotice = document.getElementById("loginNotice");
+      const openAuthBtn = document.getElementById("openAuthBtn");
+      
+      const panel = document.getElementById("authPanel");
+      const backdrop = document.getElementById("drawerBackdrop");
+      const signInBtn = document.getElementById("signInBtn");
 
-      // ---------- AUTH CHECK ----------
+      const loginBtn = document.getElementById("loginBtn");
+      const signupBtn = document.getElementById("signupBtn");
+      const email = document.getElementById("loginEmail");
+      const password = document.getElementById("loginPassword");
+      const msg = document.getElementById("loginMsg");
+
+      const toggle = document.getElementById("toggleAuth");
+      const title = document.getElementById("authTitle");
+      const toggleText = document.getElementById("toggleText");
+
+      // ---------- DRAWER FUNCTIONS ----------
+      function openDrawer() {
+        panel.classList.add("open");
+        backdrop.classList.add("active");
+      }
+
+      function closeDrawer() {
+        panel.classList.remove("open");
+        backdrop.classList.remove("active");
+        msg.textContent = "";
+      }
+
+      signInBtn.onclick = (e) => {
+        e.preventDefault();
+        openDrawer();
+      };
+
+      openAuthBtn.onclick = openDrawer;
+      backdrop.onclick = closeDrawer;
+
+      // ---------- LOGIN ----------
+      loginBtn.onclick = async () => {
+        try {
+          await signInWithEmailAndPassword(auth, email.value, password.value);
+          msg.textContent = "Logged in";
+          msg.style.color = "lightgreen";
+          setTimeout(closeDrawer, 800);
+        } catch (err) {
+          msg.textContent = err.message;
+          msg.style.color = "salmon";
+        }
+      };
+
+      // ---------- SIGNUP ----------
+      signupBtn.onclick = async () => {
+        try {
+          await createUserWithEmailAndPassword(
+            auth,
+            email.value,
+            password.value
+          );
+          msg.textContent = "Account created";
+          msg.style.color = "lightgreen";
+          setTimeout(closeDrawer, 800);
+        } catch (err) {
+          msg.textContent = err.message;
+          msg.style.color = "salmon";
+        }
+      };
+
+      // ---------- TOGGLE ----------
+      toggle.onclick = (e) => {
+        e.preventDefault();
+        panel.classList.toggle("signup");
+        panel.classList.toggle("login");
+
+        if (panel.classList.contains("signup")) {
+          title.textContent = "Create account";
+          toggleText.textContent = "Already have an account?";
+          toggle.textContent = "Sign in";
+          loginBtn.style.display = "none";
+          signupBtn.style.display = "block";
+        } else {
+          title.textContent = "Sign in";
+          toggleText.textContent = "New here?";
+          toggle.textContent = "Create an account";
+          loginBtn.style.display = "block";
+          signupBtn.style.display = "none";
+        }
+      };
+
+      // ---------- AUTH STATE ----------
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
+          signInBtn.textContent = "Sign In";
           loginNotice.style.display = "block";
           bookingsContainer.innerHTML = "";
           return;
         }
 
-        // user is logged in
+        // User is logged in
+        signInBtn.textContent = user.email;
         loginNotice.style.display = "none";
         loadUserBookings(user.uid);
       });
 
       // ---------- LOAD BOOKINGS ----------
       async function loadUserBookings(userId) {
-        bookingsContainer.innerHTML = "";
+        bookingsContainer.innerHTML = "<p style='text-align: center; color: var(--text);'>Loading your bookings...</p>";
 
         try {
           const q = query(
@@ -88,9 +292,11 @@
           const snapshot = await getDocs(q);
 
           if (snapshot.empty) {
-            bookingsContainer.innerHTML = "<p>You have no bookings yet.</p>";
+            bookingsContainer.innerHTML = "<p class='no-bookings'>You have no bookings yet. <a href='bookingform.html' style='color: var(--light);'>Make your first booking!</a></p>";
             return;
           }
+
+          bookingsContainer.innerHTML = "";
 
           snapshot.forEach((doc) => {
             const data = doc.data();
@@ -100,23 +306,23 @@
 
             bookingEl.innerHTML = `
               <h3>${data.roomtype}</h3>
+              <p><strong>Guest:</strong> ${data.guestName}</p>
               <p><strong>Check-in:</strong> ${data.checkin}</p>
               <p><strong>Check-out:</strong> ${data.checkout}</p>
-              <p><strong>Guests:</strong> ${data.adults} adults, ${
-              data.children
-            } children</p>
-              <p><strong>Total:</strong> ₹${data.totalPrice || "—"}</p>
+              <p><strong>Guests:</strong> ${data.adults} adult${data.adults > 1 ? 's' : ''}, ${data.children} child${data.children != 1 ? 'ren' : ''}</p>
+              <p><strong>Rooms:</strong> ${data.rooms}</p>
+              <p><strong>Total:</strong> ₹${data.totalPrice ? data.totalPrice.toLocaleString() : "—"}</p>
+              <p><strong>Email:</strong> ${data.guestEmail}</p>
+              <p><strong>Phone:</strong> ${data.guestPhone}</p>
             `;
 
             bookingsContainer.appendChild(bookingEl);
           });
         } catch (error) {
           console.error("Error loading bookings:", error);
-          bookingsContainer.innerHTML = "<p>Error loading bookings.</p>";
+          bookingsContainer.innerHTML = "<p class='no-bookings'>Error loading bookings. Please try again later.</p>";
         }
       }
     </script>
-    <script src="//code.tidio.co/aesgq5fgp2z1bvhtsoj2ets6j6wwy9lh.js" async></script>
   </body>
 </html>
-
