@@ -221,6 +221,7 @@ body {
 .section-title {
   text-align: center;
   font-size: 3rem;
+  font-family: Georgia, 'Times New Roman', Times, serif; 
   color: #ffffff;
   margin-bottom: 4rem;
   letter-spacing: 2px;
@@ -269,6 +270,7 @@ body {
 
 .card-content h3 {
   font-size: 1.8rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   color: #ffffff;
   margin-bottom: 0.5rem;
 }
@@ -289,7 +291,8 @@ body {
   padding: 0.8rem 1.5rem;
   border-radius: 25px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 300;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   cursor: pointer;
   z-index: 1001;
   transition: all 0.3s;
@@ -377,7 +380,8 @@ body {
 }
 
 .page-header h1 {
-  font-size: 3rem;
+  font-size: 5rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   color: #ffffff;
   margin-bottom: 0.5rem;
 }
@@ -863,11 +867,13 @@ body {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
   font-weight: 400;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .form-header p {
   color: var(--text);
   font-size: 1.1rem;
+  font-style: oblique;
 }
 
 .booking-form-grid {
@@ -900,11 +906,16 @@ body {
   padding: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-size: 2rem;
+  font-weight: 300;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: oblique;
 }
 
 .booking-form-page .btn-book:hover {
   box-shadow: 0 5px 20px rgba(50, 130, 184, 0.3);
 }
+
 
 /* AUTH PANEL */
 .auth-panel {
