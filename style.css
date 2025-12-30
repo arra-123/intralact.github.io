@@ -484,6 +484,13 @@ body {
 }
 
 /* CHILL EXPERIENCES PAGE */
+
+.chill-page-content {
+  padding: 8rem 5% 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .chill-page-header {
   margin-bottom: 3rem;
 }
@@ -509,7 +516,7 @@ body {
   display: grid;
   grid-template-columns: 300px 1fr auto;
   gap: 2rem;
-  background: var(--chill);
+  background: transparent;
   border-radius: 12px;
   padding: 2rem;
   border: 2px solid rgba(0, 150, 136, 0.3);
@@ -594,6 +601,13 @@ body {
 }
 
 /* ADVENTUROUS EXPERIENCES PAGE */
+
+.advent-page-content {
+  padding: 8rem 5% 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .advent-page-header {
   margin-bottom: 3rem;
 }
@@ -619,7 +633,7 @@ body {
   display: grid;
   grid-template-columns: 300px 1fr auto;
   gap: 2rem;
-  background: var(--adventurous);
+  background: transparent;
   border-radius: 12px;
   padding: 2rem;
   border: 2px solid rgba(255, 87, 34, 0.3);
@@ -704,6 +718,13 @@ body {
 }
 
 /* FAMILY EXPERIENCES PAGE */
+
+.family-page-content{
+  padding: 8rem 5% 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .family-page-header {
   margin-bottom: 3rem;
 }
@@ -729,7 +750,7 @@ body {
   display: grid;
   grid-template-columns: 300px 1fr auto;
   gap: 2rem;
-  background: var(--family);
+  background: transparent;
   border-radius: 12px;
   padding: 2rem;
   border: 2px solid rgba(103, 58, 183, 0.3);
